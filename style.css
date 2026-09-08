@@ -1,6 +1,5 @@
 * {
   box-sizing: border-box;
-  padding: 0%;
 }
 
 :root {
@@ -50,6 +49,13 @@ header {
   max-width: 640px;
   margin: 0 auto 40px;
   text-align: center;
+}
+
+.title-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
 }
 
 main {
@@ -106,27 +112,29 @@ footer p {
 }
 
 .field label {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 600;
-  color: #2b2b2b;
+  color: var(--ink-soft);
 }
 
-.field input,
-.field select {
+/* Direct child selector: only .field divs placed directly
+   inside the form, then style their inputs/selects */
+#expense-form > .field input,
+#expense-form > .field select {
   width: 100%;
   padding: 0.8rem 0.9rem;
-  border: 1px solid #d2d7df;
+  border: 1px solid var(--line);
   border-radius: 10px;
-  background-color: #fff;
+  background-color: var(--card);
   font-family: "IBM Plex Sans", sans-serif;
   font-size: 1rem;
-  color: #1d1d1d;
-  box-sizing: border-box;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  color: var(--ink);
+  transition: border-color 0.2s ease;
 }
 
-.field input:focus,
-.field select:focus {
+/* Focus state, applied to every input/select that isn't a button */
+input:not([type="button"]):focus,
+select:focus {
   outline: none;
   border-color: var(--pine);
 }
@@ -135,39 +143,13 @@ footer p {
   appearance: none;
   background-image:
     linear-gradient(45deg, transparent 50%, var(--ochre) 50%),
-    linear-gradient(135deg, #160ac7 50%, transparent 50%);
+    linear-gradient(135deg, var(--ochre) 50%, transparent 50%);
   background-position:
     calc(100% - 18px) calc(50% - 2px),
     calc(100% - 12px) calc(50% - 2px);
   background-size: 6px 6px, 6px 6px;
   background-repeat: no-repeat;
   padding-right: 2.5rem;
-}
-
-
-/* Element selectors: label + input, shared by every field */
-label {
-  display: block;
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: var(--ink-soft);
-  margin-bottom: 6px;
-}
-
-input {
-  width: 100%;
-  font-family: "IBM Plex Sans", sans-serif;
-  font-size: 1rem;
-  padding: 10px 12px;
-  border: 1px solid var(--line);
-  border-radius: 4px;
-  background: var(--paper);
-  color: var(--ink);
-}
-
-input:focus {
-  outline: 2px solid var(--pine);
-  outline-offset: 1px;
 }
 
 .add-btn {
@@ -207,4 +189,81 @@ input:focus {
   font-style: italic;
   color: var(--ink-soft);
   padding: 12px 0;
+}
+
+/* ================================
+   Details / summary: collapsible "how to" section
+   ================================ */
+.how-to {
+  border-top-color: var(--pine);
+}
+
+.how-to summary {
+  font-family: "Fraunces", serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.how-to p {
+  margin-top: 14px;
+}
+
+/* ================================
+   Video section
+   ================================ */
+.video-section {
+  border-top-color: var(--ochre);
+}
+
+.video-wrapper {
+  width: 100%;
+}
+
+.video-wrapper iframe {
+  width: 100%;
+  max-width: 560px;
+  height: 315px;
+  border-radius: 4px;
+  display: block;
+  margin: 0 auto;
+}
+
+/* ================================
+   Table: element selector for shared structure
+   ================================ */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+/* Descendant selector: any td inside .expenses-list, however deep */
+.expenses-list td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+}
+
+.expenses-list th {
+  padding: 10px 12px;
+  text-align: left;
+  background: var(--pine);
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Positional pseudo-class: alternating row backgrounds */
+tbody tr:nth-child(even) {
+  background: #F1EFE9;
+}
+
+/* Positional pseudo-class: the very first data row gets a top border */
+tbody tr:first-child td {
+  border-top: 1px solid var(--line);
+}
+
+/* Row hover state */
+tbody tr:hover {
+  background: #EAF0EC;
 }
