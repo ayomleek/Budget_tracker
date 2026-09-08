@@ -117,8 +117,7 @@ footer p {
   color: var(--ink-soft);
 }
 
-/* Direct child selector: only .field divs placed directly
-   inside the form, then style their inputs/selects */
+/* Direct child selector*/
 #expense-form > .field input,
 #expense-form > .field select {
   width: 100%;
