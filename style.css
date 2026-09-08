@@ -141,8 +141,8 @@ select:focus {
 .field select {
   appearance: none;
   background-image:
-    linear-gradient(45deg, transparent 50%, var(--ochre) 50%),
-    linear-gradient(135deg, var(--ochre) 50%, transparent 50%);
+    linear-gradient(45deg, transparent 50%, rgb(51, 51, 51) 50%),
+    linear-gradient(135deg, rgb(51, 51, 51) 50%, transparent 50%);
   background-position:
     calc(100% - 18px) calc(50% - 2px),
     calc(100% - 12px) calc(50% - 2px);
