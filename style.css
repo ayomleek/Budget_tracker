@@ -1,0 +1,213 @@
+* {
+  box-sizing: border-box;
+  padding: 0%;
+}
+
+/* ================================
+   Tokens
+   ================================ */
+:root {
+  --paper: #F6F5F1;
+  --card: #FFFFFF;
+  --ink: #22303C;
+  --ink-soft: #5B6B76;
+  --pine: #2F6D5C;
+  --ochre: #C98A3E;
+  --line: #D8D4C9;
+}
+
+/* ================================
+   Element selectors: base page styles
+   ================================ */
+
+
+body {
+  margin: 0;
+  padding: 48px 24px 80px;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "IBM Plex Sans", sans-serif;
+  line-height: 1.5;
+}
+
+h1 {
+  font-family: "Fraunces", serif;
+  font-weight: 600;
+  font-size: 2.4rem;
+  margin: 0 0 8px;
+}
+
+h2 {
+  font-family: "Fraunces", serif;
+  font-weight: 600;
+  font-size: 1.3rem;
+  margin: 0 0 20px;
+}
+
+p {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+header {
+  max-width: 640px;
+  margin: 0 auto 40px;
+  text-align: center;
+}
+
+main {
+  max-width: 640px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+footer {
+  max-width: 640px;
+  margin: 56px auto 0;
+  text-align: center;
+}
+
+footer p {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+
+/* ================================
+   ID selector: the page title specifically
+   ================================ */
+#page-title {
+  color: var(--pine);
+  letter-spacing: -0.01em;
+}
+
+/* ================================
+   Class selector: shared "card" look for every section
+   ================================ */
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--ink);
+  border-radius: 4px;
+  padding: 28px 32px;
+}
+
+/* ================================
+   Class selector: the Add Expense section specifically
+   ================================ */
+.add-expense {
+  border-top-color: var(--pine);
+}
+
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.field label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #2b2b2b;
+}
+
+.field input,
+.field select {
+  width: 100%;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid #d2d7df;
+  border-radius: 10px;
+  background-color: #fff;
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 1rem;
+  color: #1d1d1d;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.field input:focus,
+.field select:focus {
+  outline: none;
+  border-color: var(--pine);
+}
+
+.field select {
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--ochre) 50%),
+    linear-gradient(135deg, #160ac7 50%, transparent 50%);
+  background-position:
+    calc(100% - 18px) calc(50% - 2px),
+    calc(100% - 12px) calc(50% - 2px);
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  padding-right: 2.5rem;
+}
+
+
+/* Element selectors: label + input, shared by every field */
+label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+}
+
+input {
+  width: 100%;
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 1rem;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+input:focus {
+  outline: 2px solid var(--pine);
+  outline-offset: 1px;
+}
+
+.add-btn {
+  font-family: "IBM Plex Sans", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--pine);
+  border: none;
+  border-radius: 4px;
+  padding: 12px 20px;
+  cursor: pointer;
+}
+
+/* ================================
+   ID selector: the Add Expense section specifically
+   (distinct from the shared .card / .add-expense classes above)
+   ================================ */
+#add-expense h2::after {
+  content: "";
+  display: block;
+  width: 36px;
+  height: 3px;
+  background: var(--ochre);
+  margin-top: 10px;
+}
+
+/* ================================
+   Class selector: the Your Expenses section specifically
+   ================================ */
+.expenses-list {
+  border-top-color: var(--ochre);
+  background: #FBFAF7;
+}
+
+.placeholder-text {
+  font-style: italic;
+  color: var(--ink-soft);
+  padding: 12px 0;
+}

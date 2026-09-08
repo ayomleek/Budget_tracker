@@ -1,0 +1,62 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Budget Tracker</title>
+ 
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+ 
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+ 
+  <header>
+    <h1 id="page-title">My Budget Tracker</h1>
+    <p class="subtitle">Tracking my income and expenses in one place.</p>
+  </header>
+ 
+  <main>
+    <section id="add-expense" class="card add-expense">
+      <h2>Add Expense</h2>
+ 
+      <div class="field">
+        <label for="expense-name">Expense name</label>
+        <input type="text" id="expense-name" name="expense-name" placeholder="e.g. Computer">
+      </div>
+ 
+      <div class="field">
+        <label for="expense-amount">Amount</label>
+        <input type="number" id="expense-amount" name="expense-amount" placeholder="0.00" min="0" step="0.01">
+      </div>
+ 
+      <div class="field">
+        <label for="expense-category">Category</label>
+        <select id="expense-category" name="expense-category">
+          <option value="">Select a category</option>
+          <option value="Food">Food</option>
+          <option value="Transport">Transport</option>
+          <option value="Housing">Housing</option>
+          <option value="Entertainment">Entertainment</option>
+          <option value="Utilities">Utilities</option>
+        </select>
+      </div>
+  
+      <button type="button" class="add-btn">Add expense</button>
+    </section>
+ 
+    <section class="card expenses-list">
+      <h2>My Expenses</h2>
+      <p class="placeholder-text">No expenses yet.</p>
+    </section>
+  </main>
+ 
+  <footer>
+    <p>This expense tracker is built by Ayom to monitor his expenses in one place.</p>
+  </footer>
+ 
+</body>
+</html>
