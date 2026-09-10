@@ -235,7 +235,7 @@ select:focus {
 .video-wrapper iframe {
   width: 100%;
   max-width: 560px;
-  height: 315px;
+   aspect-ratio: 16 / 9;
   border-radius: 8px;
   display: block;
   margin: 0 auto;
