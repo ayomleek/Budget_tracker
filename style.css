@@ -22,7 +22,7 @@ body {
   padding: 48px 24px 80px;
   background: var(--paper);
   color: var(--ink);
-  font-family: "Poppins", sans-serif;
+  font-family: "IBM Plex Sans", sans-serif;
   line-height: 1.5;
 }
 
@@ -47,8 +47,14 @@ p {
 
 header {
   max-width: 640px;
-  margin: 0 auto 40px;
+  margin: 0 auto 32px;
   text-align: center;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--pine);
+  border-radius: 10px;
+  padding: 32px 32px 28px;
+  box-shadow: 0 1px 2px rgba(34, 48, 60, 0.05);
 }
 
 .title-row {
@@ -92,8 +98,9 @@ footer p {
   background: var(--card);
   border: 1px solid var(--line);
   border-top: 3px solid var(--ink);
-  border-radius: 4px;
+  border-radius: 10px;
   padding: 28px 32px;
+  box-shadow: 0 1px 2px rgba(34, 48, 60, 0.05);
 }
 
 /* ================================
@@ -117,7 +124,8 @@ footer p {
   color: var(--ink-soft);
 }
 
-/* Direct child selector*/
+/* Direct child selector: only .field divs placed directly
+   inside the form, then style their inputs/selects */
 #expense-form > .field input,
 #expense-form > .field select {
   width: 100%;
@@ -141,8 +149,8 @@ select:focus {
 .field select {
   appearance: none;
   background-image:
-    linear-gradient(45deg, transparent 50%, rgb(51, 51, 51) 50%),
-    linear-gradient(135deg, rgb(51, 51, 51) 50%, transparent 50%);
+    linear-gradient(45deg, transparent 50%, var(--ochre) 50%),
+    linear-gradient(135deg, var(--ochre) 50%, transparent 50%);
   background-position:
     calc(100% - 18px) calc(50% - 2px),
     calc(100% - 12px) calc(50% - 2px);
@@ -158,9 +166,14 @@ select:focus {
   color: #fff;
   background: var(--pine);
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   padding: 12px 20px;
   cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.add-btn:hover {
+  background: #275c4e;
 }
 
 /* ================================
@@ -223,7 +236,7 @@ select:focus {
   width: 100%;
   max-width: 560px;
   height: 315px;
-  border-radius: 4px;
+  border-radius: 8px;
   display: block;
   margin: 0 auto;
 }
@@ -233,8 +246,28 @@ select:focus {
    ================================ */
 table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
   font-size: 0.95rem;
+}
+
+/* Round the table's four outer corners */
+thead tr:first-child th:first-child {
+  border-top-left-radius: 7px;
+}
+
+thead tr:first-child th:last-child {
+  border-top-right-radius: 7px;
+}
+
+tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 7px;
+}
+
+tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 7px;
 }
 
 /* Descendant selector: any td inside .expenses-list, however deep */
@@ -260,6 +293,12 @@ tbody tr:nth-child(even) {
 /* Positional pseudo-class: the very first data row gets a top border */
 tbody tr:first-child td {
   border-top: 1px solid var(--line);
+}
+
+/* Remove the last row's own bottom border so it doesn't double
+   up with the table's outer frame border */
+tbody tr:last-child td {
+  border-bottom: none;
 }
 
 /* Row hover state */
