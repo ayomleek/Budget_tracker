@@ -22,7 +22,7 @@ body {
   padding: 48px 24px 80px;
   background: var(--paper);
   color: var(--ink);
-  font-family: "IBM Plex Sans", sans-serif;
+  font-family: "poppins", sans-serif;
   line-height: 1.5;
 }
 
@@ -133,7 +133,7 @@ footer p {
   border: 1px solid var(--line);
   border-radius: 10px;
   background-color: var(--card);
-  font-family: "IBM Plex Sans", sans-serif;
+  font-family: "poppins", sans-serif;
   font-size: 1rem;
   color: var(--ink);
   transition: border-color 0.2s ease;
@@ -160,7 +160,7 @@ select:focus {
 }
 
 .add-btn {
-  font-family: "IBM Plex Sans", sans-serif;
+  font-family: "poppins", sans-serif;
   font-size: 0.95rem;
   font-weight: 600;
   color: #fff;
