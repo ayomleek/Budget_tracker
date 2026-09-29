@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 360" role="img" aria-labelledby="title desc">
+  <title id="title">SpendWise logo</title>
+  <desc id="desc">A professional expense tracking logo featuring a wallet, spending chart and upward arrow in teal and orange.</desc>
+
+  <!-- Brand colors:
+       Primary teal: #2F6D5C
+       Accent orange: #C98A3E
+       Transparent background
+  -->
+
+  <g transform="translate(35 45)">
+    <!-- Orange spending/growth arc -->
+    <path d="M35 190 C25 265 120 305 225 276 C275 262 320 235 348 196"
+          fill="none" stroke="#C98A3E" stroke-width="24"
+          stroke-linecap="round"/>
+    <path d="M333 182 L370 168 L359 207 Z" fill="#C98A3E"/>
+
+    <!-- Wallet -->
+    <path d="M72 82
+             C72 68 83 57 97 57
+             H300
+             C316 57 328 69 328 85
+             V215
+             C328 231 316 243 300 243
+             H97
+             C83 243 72 232 72 218 Z"
+          fill="#2F6D5C"/>
+
+    <!-- Wallet top/card layers -->
+    <path d="M88 58 L245 10 C259 6 272 15 274 29 L276 51 L105 73 C95 74 88 67 88 58 Z"
+          fill="#C98A3E"/>
+    <path d="M105 73 L285 35 C298 32 310 41 311 54 L312 75 L108 91 Z"
+          fill="#C98A3E"/>
+
+    <!-- Wallet seam -->
+    <path d="M72 82 C72 68 83 57 97 57"
+          fill="none" stroke="#FFFFFF" stroke-width="9" stroke-linecap="round"/>
+
+    <!-- Spending chart -->
+    <rect x="112" y="180" width="25" height="38" rx="3" fill="#C98A3E"/>
+    <rect x="154" y="153" width="25" height="65" rx="3" fill="#C98A3E"/>
+    <rect x="196" y="121" width="25" height="97" rx="3" fill="#C98A3E"/>
+
+    <!-- Wallet clasp -->
+    <path d="M273 125 H330 C346 125 357 136 357 151 V180 C357 195 346 206 330 206 H273
+             C250 206 232 188 232 166 C232 143 250 125 273 125 Z"
+          fill="#FFFFFF"/>
+    <circle cx="278" cy="166" r="8" fill="#2F6D5C"/>
+  </g>
+
+  <!-- Wordmark -->
+  <text x="420" y="222"
+        font-family="Georgia, 'Times New Roman', serif"
+        font-size="126"
+        font-weight="700"
+        letter-spacing="-5">
+    <tspan fill="#2F6D5C">Spend</tspan><tspan fill="#C98A3E">Wise</tspan>
+  </text>
+</svg>
