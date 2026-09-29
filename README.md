@@ -81,6 +81,17 @@ Instead of one long script, the logic is split into single-purpose functions: th
 
 Every calculated value is printed with a clear label (`Monthly budget:`, `Total spent:`, `Remaining balance:`, etc.), grouped into an overall summary block followed by a per-category breakdown block, with header/divider lines so the output is easy to scan in the console rather than one wall of numbers.
 
+### Connecting the Add Expense form
+
+The "Add Expense" button now has a real `click` event listener (`addExpenseButton.addEventListener("click", handleAddExpense)`). When clicked:
+
+1. `readExpenseFromForm()` reads the four inputs by their `id` (`expense-name`, `expense-amount`, `expense-category`, `expense-date`), trims/parses them, and validates each one — an empty name, a non-positive amount, a blank category, or a missing date all stop the process with an `alert()` telling the user what to fix, and move focus back to that field. It returns `null` if anything's invalid, or a plain expense object (`{ name, amount, category, date }`) if everything checks out.
+2. `handleAddExpense()` calls that function, and if it got a real object back, pushes it into the existing `expenses` array with `.push()` — no new array is created, so every other function (`getTotalExpenses`, `getCategoryTotal`, etc.) automatically sees the new entry next time it runs.
+3. It calls `logBudgetSummary()` again immediately, so the console prints an updated summary reflecting the new expense.
+4. Finally, `expenseForm.reset()` clears the form so it's ready for the next entry.
+
+The table on the page itself isn't re-rendered yet — the expense is fully tracked in the `expenses` array and every calculation reflects it, but drawing new rows into the visible `<table>` is DOM-rendering work for a later week.
+
 ## CSS selectors used (Weeks 1-2)
 
 - **Element selectors** — `body`, `h1`, `h2`, `table`, `label`
