@@ -1,12 +1,13 @@
 /* ================================================================
    SpendWise Dashboard — script.js
-   Week 5: JavaScript Foundation
+   Week 5: JavaScript Foundation + Add Expense wiring
 
-   This script doesn't touch the DOM yet — it works entirely with
-   variables, functions, and the console, per this week's brief.
-   The IDs already on the form (expense-name, expense-amount,
-   expense-category, expense-date) are what a later week will use
-   to wire this logic up to the actual page.
+   Sections 1-2 (data + calculation functions) work with plain
+   variables and the console. Section 3 connects that logic to the
+   actual page: it reads the Add Expense form using the IDs already
+   in index.html (expense-name, expense-amount, expense-category,
+   expense-date), builds a new expense object, adds it to the
+   expenses array, and re-runs the budget summary.
    ================================================================ */
 
 /* ================================
@@ -166,7 +167,84 @@ function logBudgetSummary(budget, expenseList, budgetsByCategory) {
 }
 
 /* ================================
-   3. Run the app
+   3. Wire up the Add Expense form
+   ================================ */
+
+const expenseForm = document.getElementById("expense-form");
+const addExpenseButton = expenseForm.querySelector(".add-btn");
+
+const nameInput = document.getElementById("expense-name");
+const amountInput = document.getElementById("expense-amount");
+const categoryInput = document.getElementById("expense-category");
+const dateInput = document.getElementById("expense-date");
+
+/**
+ * Reads the current values out of the Add Expense form, validates
+ * them, and returns a ready-to-use expense object — or null if
+ * something required is missing/invalid, so the caller knows not
+ * to add it.
+ * @returns {Object|null} a new expense object, or null if invalid
+ */
+function readExpenseFromForm() {
+  const name = nameInput.value.trim();
+  const amount = parseFloat(amountInput.value);
+  const category = categoryInput.value;
+  const date = dateInput.value;
+
+  if (!name) {
+    alert("Please enter an expense name.");
+    nameInput.focus();
+    return null;
+  }
+
+  if (Number.isNaN(amount) || amount <= 0) {
+    alert("Please enter a valid amount greater than 0.");
+    amountInput.focus();
+    return null;
+  }
+
+  if (!category) {
+    alert("Please select a category.");
+    categoryInput.focus();
+    return null;
+  }
+
+  if (!date) {
+    alert("Please choose a date.");
+    dateInput.focus();
+    return null;
+  }
+
+  return { name, amount, category, date };
+}
+
+/**
+ * Click handler for the "Add Expense" button: reads the form,
+ * adds the new expense to the expenses array, then re-runs the
+ * budget calculations so the console reflects the update.
+ */
+function handleAddExpense() {
+  const newExpense = readExpenseFromForm();
+
+  // readExpenseFromForm() already alerted the user about what's
+  // missing, so there's nothing left to do here except stop.
+  if (newExpense === null) {
+    return;
+  }
+
+  expenses.push(newExpense);
+
+  console.log("New expense added:", newExpense);
+  logBudgetSummary(monthlyBudget, expenses, categoryBudgets);
+
+  expenseForm.reset();
+  nameInput.focus();
+}
+
+addExpenseButton.addEventListener("click", handleAddExpense);
+
+/* ================================
+   4. Run the app
    ================================ */
 
 // Collect the user's monthly budget (falls back to the default above
