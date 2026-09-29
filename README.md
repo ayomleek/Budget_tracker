@@ -9,7 +9,7 @@ budget-tracker/
 ├── index.html      # Page structure and content
 ├── style.css       # All styling
 ├── assets/
-│   └── logo.svg     # Piggy bank logo used in the sidebar
+│   └── spendwise-logo-transparent.svg     # Spendwise logo used in the sidebar
 └── README.md
 ```
 
