@@ -3,130 +3,233 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Budget Tracker</title>
+  <title>SpendWise Dashboard</title>
 
- <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css">
+<!-- Font Awesome Icons -->
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+>
+
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <header>
-    <div class="title-row">
-      <img src="assets/logo.svg" alt="Piggy bank icon" width="40">
-      <h1 id="page-title">My Budget Tracker</h1>
-    </div>
-    <p class="subtitle">Tracking my income and expenses in one place.</p>
-  </header>
+  <div class="dashboard">
 
-  <main>
-    <section id="add-expense" class="card add-expense">
-      <h2>Add Expense</h2>
-
-      <form id="expense-form">
-        <div class="field">
-          <label for="expense-name">Expense name</label>
-          <input type="text" id="expense-name" name="expense-name" placeholder="e.g. Computer">
-        </div>
-
-        <div class="field">
-          <label for="expense-amount">Amount</label>
-          <input type="number" id="expense-amount" name="expense-amount" placeholder="0.00" min="0" step="0.01">
-        </div>
-
-        <div class="field">
-          <label for="expense-category">Category</label>
-          <select id="expense-category" name="expense-category">
-            <option value="">Select a category</option>
-            <option value="Food">Food</option>
-            <option value="Transport">Transport</option>
-            <option value="Rent">Rent</option>
-            <option value="Entertainment">Entertainment</option>
-            <option value="Other">Other</option>
-          </select>
-        </div>
-        
-        <div class="field">
-          <label for="expense-date">Date</label>
-          <input type="date" id="expense-date" name="expense-date">
-        </div>
-
-        <button type="button" class="add-btn">Add Expense</button>
-      </form>
-    </section>
-
-    <details class="card how-to">
-      <summary>How to use this tracker</summary>
-      <p>Fill in the expense name, amount, and category in the form above, then select "Add Expense." Every expense you add will appear as a new row in the table below, so you can see exactly where your money is going.</p>
-    </details>
-
-    <section class="card expenses-list">
-      <h2>My Expenses</h2>
-
-      <table>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Amount</th>
-            <th>Category</th>
-            <th>Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Groceries</td>
-            <td>$54.20</td>
-            <td>Food</td>
-            <td>2026-09-01</td>
-          </tr>
-          <tr>
-            <td>Bus pass</td>
-            <td>$32.00</td>
-            <td>Transport</td>
-            <td>2026-09-02</td>
-          </tr>
-          <tr>
-            <td>Apartment rent</td>
-            <td>$850.00</td>
-            <td>Rent</td>
-            <td>2026-09-03</td>
-          </tr>
-          <tr>
-            <td>Movie night</td>
-            <td>$18.50</td>
-            <td>Entertainment</td>
-            <td>2026-09-05</td>
-          </tr>
-          <tr>
-            <td>Phone charger</td>
-            <td>$12.99</td>
-            <td>Other</td>
-            <td>2026-09-06</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-
-    <section class="card video-section">
-      <h2>Budgeting Tip Video</h2>
-      <div class="video-wrapper">
-        <iframe
-          width="560"
-          src="https://www.youtube.com/embed/TERq4kqSd2U"
-          title="10 Budgeting Tips I Wish I Knew When I Was Broke"
-          frameborder="0"
-          allowfullscreen>
-        </iframe>
+    <!-- Sidebar / navigation -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <img src="assets/logo.svg" alt="SpendWise logo" width="32">
+        <span>SpendWise</span>
       </div>
-    </section>
-  </main>
 
-  <footer>
-    <p>This expense tracker is built by Ayom to monitor his expenses in one place.</p>
-  </footer>
+      <nav class="sidebar-nav" aria-label="Primary">
+        <a href="#dashboard-top" class="nav-link active">Dashboard</a>
+        <a href="#add-expense" class="nav-link">Add Expense</a>
+        <a href="#expenses-table" class="nav-link">Expenses</a>
+        <a href="#" class="nav-link">Reports</a>
+        <a href="#" class="nav-link">Settings</a>
+      </nav>
+    </aside>
+
+    <!-- Header -->
+    <header class="dashboard-header" id="dashboard-top">
+      <div class="header-text">
+        <h1 id="page-title">Welcome back, Ayom</h1>
+        <p class="subtitle">Here's an overview of your spending this month.</p>
+      </div>
+      <div class="header-meta">
+        <span class="header-date">September 2026</span>
+        <div class="avatar" aria-hidden="true">A</div>
+      </div>
+    </header>
+
+    <!-- Main dashboard content -->
+    <main class="dashboard-main">
+
+      <!-- Category summary cards -->
+      <section class="stats-grid" aria-label="Spending by category">
+        <article class="stat-card" tabindex="0">
+          <span class="stat-icon" aria-hidden="true">
+            <i class="fa-solid fa-utensils"></i>
+         </span>
+          <div class="stat-body">
+            <h3>Food</h3>
+            <p class="stat-amount">$420.50</p>
+            <p class="stat-meta">of $500 budget</p>
+          </div>
+        </article>
+
+        <article class="stat-card" tabindex="0">
+          <span class="stat-icon" aria-hidden="true">
+            <i class="fa-solid fa-bus"></i>
+          </span>
+          <div class="stat-body">
+            <h3>Transport</h3>
+            <p class="stat-amount">$132.00</p>
+            <p class="stat-meta">of $200 budget</p>
+          </div>
+        </article>
+
+        <article class="stat-card" tabindex="0">
+          <span class="stat-icon" aria-hidden="true">
+            <i class="fa-solid fa-home"></i>
+          </span>
+          <div class="stat-body">
+            <h3>Rent</h3>
+            <p class="stat-amount">$850.00</p>
+            <p class="stat-meta">of $850 budget</p>
+          </div>
+        </article>
+
+        <article class="stat-card" tabindex="0">
+          <span class="stat-icon" aria-hidden="true">
+            <i class="fa-solid fa-film"></i>
+          </span>
+          <div class="stat-body">
+            <h3>Entertainment</h3>
+            <p class="stat-amount">$68.50</p>
+            <p class="stat-meta">of $100 budget</p>
+          </div>
+        </article>
+
+        <article class="stat-card" tabindex="0">
+          <span class="stat-icon" aria-hidden="true">
+            <i class="fa-solid fa-coins"></i>
+          </span>
+          <div class="stat-body">
+            <h3>Savings</h3>
+            <p class="stat-amount">$300.00</p>
+            <p class="stat-meta">this month</p>
+          </div>
+        </article>
+
+        <article class="stat-card" tabindex="0">
+          <span class="stat-icon" aria-hidden="true">
+            <i class="fa-solid fa-lightbulb"></i>
+          </span>
+          <div class="stat-body">
+            <h3>Utilities</h3>
+            <p class="stat-amount">$96.40</p>
+            <p class="stat-meta">of $120 budget</p>
+          </div>
+        </article>
+      </section>
+
+      <!-- Add Expense (from Week 1-2) -->
+      <section id="add-expense" class="card add-expense">
+        <h2>Add Expense</h2>
+
+        <form id="expense-form">
+          <div class="field">
+            <label for="expense-name">Expense name</label>
+            <input type="text" id="expense-name" name="expense-name" placeholder="e.g. Computer">
+          </div>
+
+          <div class="field">
+            <label for="expense-amount">Amount</label>
+            <input type="number" id="expense-amount" name="expense-amount" placeholder="0.00" min="0" step="0.01">
+          </div>
+
+          <div class="field">
+            <label for="expense-category">Category</label>
+            <select id="expense-category" name="expense-category">
+              <option value="">Select a category</option>
+              <option value="Food">Food</option>
+              <option value="Transport">Transport</option>
+              <option value="Rent">Rent</option>
+              <option value="Entertainment">Entertainment</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="expense-date">Date</label>
+            <input type="date" id="expense-date" name="expense-date">
+          </div>
+
+          <button type="button" class="add-btn">Add Expense</button>
+        </form>
+      </section>
+
+      <details class="card how-to">
+        <summary>How to use this tracker</summary>
+        <p>Fill in the expense name, amount, and category in the form above, then select "Add Expense." Every expense you add will appear as a new row in the table below, so you can see exactly where your money is going.</p>
+      </details>
+
+      <section class="card expenses-list" id="expenses-table">
+        <h2>My Expenses</h2>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Amount</th>
+              <th>Category</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Groceries</td>
+              <td>$54.20</td>
+              <td>Food</td>
+              <td>2026-09-01</td>
+            </tr>
+            <tr>
+              <td>Bus pass</td>
+              <td>$32.00</td>
+              <td>Transport</td>
+              <td>2026-09-02</td>
+            </tr>
+            <tr>
+              <td>Apartment rent</td>
+              <td>$850.00</td>
+              <td>Rent</td>
+              <td>2026-09-03</td>
+            </tr>
+            <tr>
+              <td>Movie night</td>
+              <td>$18.50</td>
+              <td>Entertainment</td>
+              <td>2026-09-05</td>
+            </tr>
+            <tr>
+              <td>Phone charger</td>
+              <td>$12.99</td>
+              <td>Other</td>
+              <td>2026-09-06</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="card video-section">
+        <h2>Budgeting Tip Video</h2>
+        <div class="video-wrapper">
+          <iframe
+            width="560"
+            src="https://www.youtube.com/embed/TERq4kqSd2U"
+            title="10 Budgeting Tips I Wish I Knew When I Was Broke"
+            frameborder="0"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="dashboard-footer">
+      <p>This expense tracker is built by Ayom to monitor his expenses in one place.</p>
+    </footer>
+
+  </div>
 
 </body>
 </html>
