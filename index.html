@@ -52,9 +52,12 @@
     <!-- Main dashboard content -->
     <main class="dashboard-main">
 
+      <!-- Budget status banner, filled in by script.js -->
+      <p id="budget-status" class="budget-status" role="status" aria-live="polite"></p>
+
       <!-- Category summary cards -->
       <section class="stats-grid" aria-label="Spending by category">
-        <article class="stat-card" tabindex="0">
+        <article class="stat-card" data-category="Food" tabindex="0">
           <span class="stat-icon" aria-hidden="true">
             <i class="fa-solid fa-utensils"></i>
          </span>
@@ -65,7 +68,7 @@
           </div>
         </article>
 
-        <article class="stat-card" tabindex="0">
+        <article class="stat-card" data-category="Transport" tabindex="0">
           <span class="stat-icon" aria-hidden="true">
             <i class="fa-solid fa-bus"></i>
           </span>
@@ -76,7 +79,7 @@
           </div>
         </article>
 
-        <article class="stat-card" tabindex="0">
+        <article class="stat-card" data-category="Rent" tabindex="0">
           <span class="stat-icon" aria-hidden="true">
             <i class="fa-solid fa-home"></i>
           </span>
@@ -87,7 +90,7 @@
           </div>
         </article>
 
-        <article class="stat-card" tabindex="0">
+        <article class="stat-card" data-category="Entertainment" tabindex="0">
           <span class="stat-icon" aria-hidden="true">
             <i class="fa-solid fa-film"></i>
           </span>
@@ -98,7 +101,7 @@
           </div>
         </article>
 
-        <article class="stat-card" tabindex="0">
+        <article class="stat-card" data-category="Savings" tabindex="0">
           <span class="stat-icon" aria-hidden="true">
             <i class="fa-solid fa-coins"></i>
           </span>
@@ -109,7 +112,7 @@
           </div>
         </article>
 
-        <article class="stat-card" tabindex="0">
+        <article class="stat-card" data-category="Utilities" tabindex="0">
           <span class="stat-icon" aria-hidden="true">
             <i class="fa-solid fa-lightbulb"></i>
           </span>
@@ -144,6 +147,7 @@
               <option value="Transport">Transport</option>
               <option value="Rent">Rent</option>
               <option value="Entertainment">Entertainment</option>
+              <option value="Utilities">Utilities</option>
               <option value="Other">Other</option>
             </select>
           </div>
@@ -159,7 +163,7 @@
 
       <details class="card how-to">
         <summary>How to use this tracker</summary>
-        <p>Fill in the expense name, amount, and category in the form above, then select "Add Expense." Every expense you add will appear as a new row in the table below, so you can see exactly where your money is going.</p>
+        <p>Fill in the expense name, amount, and category in the form above, then select "Add Expense." Every expense you add appears as a new row in the table below and updates the category cards and budget status above right away. Use the "Remove" link on any row to take it back out.</p>
       </details>
 
       <section class="card expenses-list" id="expenses-table">
@@ -172,38 +176,44 @@
               <th>Amount</th>
               <th>Category</th>
               <th>Date</th>
+              <th>Actions</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="expenses-tbody">
             <tr>
               <td>Groceries</td>
               <td>$54.20</td>
               <td>Food</td>
               <td>2026-09-01</td>
+              <td>—</td>
             </tr>
             <tr>
               <td>Bus pass</td>
               <td>$32.00</td>
               <td>Transport</td>
               <td>2026-09-02</td>
+              <td>—</td>
             </tr>
             <tr>
               <td>Apartment rent</td>
               <td>$850.00</td>
               <td>Rent</td>
               <td>2026-09-03</td>
+              <td>—</td>
             </tr>
             <tr>
               <td>Movie night</td>
               <td>$18.50</td>
               <td>Entertainment</td>
               <td>2026-09-05</td>
+              <td>—</td>
             </tr>
             <tr>
               <td>Phone charger</td>
               <td>$12.99</td>
               <td>Other</td>
               <td>2026-09-06</td>
+              <td>—</td>
             </tr>
           </tbody>
         </table>
@@ -230,7 +240,7 @@
 
   </div>
 
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
 
 </body>
 </html>

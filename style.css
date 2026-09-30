@@ -27,6 +27,8 @@
   --shadow-color: rgba(34, 48, 60, 0.08);/* card shadow */
   --row-alt: #F1EFE9;                    /* alternating table row background */
   --on-brand: #FFFFFF;                   /* text/icon color placed on top of brand-colored elements */
+  --danger: #B3432D;                     /* over-budget warning color */
+  --danger-tint: rgba(179, 67, 45, 0.10);/* subtle danger background */
 }
 
 /* Stretch goal: dark theme, overriding only the :root variables */
@@ -45,6 +47,8 @@
     --shadow-color: rgba(0, 0, 0, 0.45);
     --row-alt: #262E35;
     --on-brand: #0F1B17;
+    --danger: #E1725A;
+    --danger-tint: rgba(225, 114, 90, 0.15);
   }
 }
 
@@ -210,6 +214,35 @@ p {
 }
 
 /* ================================
+   Budget status banner — filled in dynamically by script.js
+   ================================ */
+.budget-status {
+  margin: 0;
+  padding: 14px 18px;
+  border-radius: 10px;
+  font-weight: 600;
+  border: 1px solid var(--line);
+  background: var(--brand-tint);
+  color: var(--brand);
+}
+
+.budget-status:empty {
+  display: none;
+}
+
+.budget-status.is-warning {
+  background: rgba(201, 138, 62, 0.12);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.budget-status.is-over {
+  background: var(--danger-tint);
+  color: var(--danger);
+  border-color: var(--danger);
+}
+
+/* ================================
    Stat cards: CSS Grid for the 6-card layout,
    Flexbox for the content inside each card
    ================================ */
@@ -229,6 +262,21 @@ p {
   padding: 18px 20px;
   box-shadow: 0 1px 2px var(--shadow-color);
   transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+/* Decision-driven state: applied by script.js when a category's
+   spending has passed its budget */
+.stat-card.is-over-budget {
+  border-color: var(--danger);
+}
+
+.stat-card.is-over-budget .stat-icon {
+  background: var(--danger-tint);
+  color: var(--danger);
+}
+
+.stat-card.is-over-budget .stat-amount {
+  color: var(--danger);
 }
 
 .stat-icon {
@@ -475,6 +523,25 @@ tbody tr:last-child td {
 /* Row hover state */
 tbody tr:hover {
   background: var(--brand-tint);
+}
+
+/* Remove-expense button, rendered per row by script.js */
+.remove-btn {
+  border: none;
+  background: none;
+  color: var(--danger);
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 6px;
+  transition: background 150ms ease;
+}
+
+.remove-btn:hover,
+.remove-btn:focus-visible {
+  background: var(--danger-tint);
+  outline: none;
 }
 
 /* ================================

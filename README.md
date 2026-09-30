@@ -1,6 +1,6 @@
 # SpendWise Dashboard
 
-A personal budget and expense tracker, built up week by week as a portfolio project. It started as a single-column page in Week 1, became a full dashboard shell with a sidebar, header, and category overview in Week 4, and this week gains its first real JavaScript logic — turning the static numbers on the page into values the app can actually calculate with.
+A personal budget and expense tracker, built up week by week as a portfolio project. It started as a single-column page in Week 1, became a full dashboard shell with a sidebar, header, and category overview in Week 4, gained its first real JavaScript logic in Week 5, and this week — Week 6 — becomes genuinely interactive: adding or removing an expense now updates the table, the category cards, and a live budget-status message directly on the page, not just in the console.
 
 ## Files
 
@@ -8,7 +8,7 @@ A personal budget and expense tracker, built up week by week as a portfolio proj
 budget-tracker/
 ├── index.html      # Page structure and content
 ├── style.css       # All styling
-├── script.js       # Budget data, user input, and calculations (Week 5)
+├── script.js       # Data, calculations, DOM rendering, and events (Weeks 5-6)
 ├── assets/
 │   └── spendwise-logo-transparent.svg   # SpendWise logo used in the sidebar
 └── README.md
@@ -22,75 +22,70 @@ A fixed navigation column with the SpendWise logo and links to Dashboard, Add Ex
 **Header**
 A welcome message and subheading on the left, a date label and avatar circle on the right.
 
+**Budget status banner**
+A single line directly under the header (`#budget-status`) that `script.js` fills in and re-colors every time the data changes — a plain-language summary of whether you're within budget, close to your limit, or over it.
+
 **Category cards**
-Six cards (Food, Transport, Rent, Entertainment, Savings, Utilities), each showing a Font Awesome icon and a realistic static amount, with an "of $X budget" note. These same six numbers are what `script.js` now works with behind the scenes.
+Six cards (Food, Transport, Rent, Entertainment, Savings, Utilities), each with a Font Awesome icon, a live spent amount, and an "of $X budget" note. Each card carries a `data-category` attribute so `script.js` can find and update it by name, and any card whose spending has passed its budget gets flagged visually.
 
 **Add Expense** (`#add-expense`)
-A `<form>` with four fields: expense name, amount, category (a `<select>` with five options), and date. Each input's `id` matches its `<label for>`, and those IDs (`expense-name`, `expense-amount`, `expense-category`, `expense-date`) are what a future week's JavaScript will read from when the button is wired up to actually add a row.
+A `<form>` with four fields: expense name, amount, category (a `<select>` with six options — Food, Transport, Rent, Entertainment, Utilities, Other), and date. Clicking "Add Expense" now actually adds the entry to the app's data and refreshes the whole dashboard.
 
 **How to use this tracker**
-A collapsible `<details>`/`<summary>` element explaining how the form and table work together.
+A collapsible `<details>`/`<summary>` element, updated this week to mention that expenses can also be removed.
 
 **My Expenses** (`#expenses-table`)
-A `<table>` with `<thead>`/`<tbody>`, four columns (Name, Amount, Category, Date), and five hardcoded sample rows — the same five expenses `script.js` uses for its calculations, so the console output matches what's visible on the page.
+A `<table>` whose `<tbody id="expenses-tbody">` is rebuilt by JavaScript every time the data changes, now with a fifth "Actions" column holding a "Remove" button per row.
 
 **Budgeting Tip Video**
 A YouTube video embedded via a responsive `<iframe>`.
 
-## Week 5: JavaScript Foundation
+## Week 6: Make SpendWise Interactive
 
-This week's goal was to start working with SpendWise's data in JavaScript — variables, user input, and calculations — without touching the page's HTML yet. Everything happens in `script.js` and prints to the browser console; open DevTools → Console to see it.
+This week connects everything Week 5 built to the actual page. The core idea: the `expenses` array is the single source of truth, and one function — `refreshDashboard()` — re-renders every part of the page from that array whenever it changes (on page load, after adding an expense, or after removing one).
 
-### What script.js does
+### How conditionals are used
 
-When the page loads, it:
-1. Asks the visitor for their monthly budget with a `prompt()`.
-2. Calculates the total spent, the remaining balance, and a per-category breakdown.
-3. Prints all of it to the console as a clearly labeled summary.
+Decision-making shows up at two levels:
 
-### How variables are used
+- **Per category** (`renderCategoryCards`): for each category, `if (spent > categoryBudget) { card.classList.add("is-over-budget") } else { card.classList.remove(...) }` decides whether that card gets a visual warning treatment.
+- **Overall budget** (`renderBudgetStatus`): a three-branch `if / else if / else` picks between three outcomes — over budget (`remaining < 0`), close to the limit (`percentUsed >= 80`), or comfortably within budget — and sets both the message text and a CSS class from that decision, so the banner's color and wording are both driven by the same conditional.
+- Form validation (`readExpenseFromForm`) is also a chain of `if` checks — empty name, invalid amount, missing category, missing date — each one stopping the process early with a specific, relevant `alert()`.
 
-- `let monthlyBudget` holds the one piece of data that changes during the session — it starts as a default (`1770`) and gets reassigned once the user answers the prompt, which is why it's declared with `let` rather than `const`.
-- `const categoryBudgets` is an **object**, pairing each category name (a string key) with its budget ceiling (a number value) — `{ Food: 500, Transport: 200, ... }`.
-- `const savingsGoal` is a single number, kept separate from `categoryBudgets` since savings isn't a spending limit.
-- `const expenses` is an **array of objects** — one object per expense, each bundling a string (`name`), a number (`amount`), a string (`category`), and a string (`date`). This mirrors the five rows in the HTML table.
-- Inside the functions below, a `const isOverBudget` boolean is calculated from a comparison (`remaining < 0`), showing all four data types the assignment covers — string, number, object/array, and boolean — in active use.
+### How arrays are used to store data
 
-### How user input is collected
+`expenses` is a `const` array of plain objects (one object per expense — `{ name, amount, category, date }`), and it's the only place expense data lives — there's no separate set of variables per expense. Every read (table rendering, category totals, overall totals) works from this array, and every write goes through either `.push()` (adding) or `.splice()` (removing), so the array is always the current, authoritative state of the app.
 
-`promptForMonthlyBudget()` calls the browser's built-in `prompt()`, pre-filled with the current default budget so the user can just confirm it or type a new number. The raw value from `prompt()` is always a string (or `null` if the user hits Cancel), so the function:
-- Checks for `null` first (Cancel was clicked) and falls back to the default.
-- Otherwise runs the input through `parseFloat()` to convert it to a number, and checks `Number.isNaN()` plus a `> 0` check to catch empty input, text, or negative numbers, falling back to the default in any of those cases too.
+### How the DOM is updated
 
-This means the app never crashes or shows `NaN` in the console, whatever the user types.
+Three functions turn the array into visible content:
 
-### How calculations are performed
+- `renderExpensesTable()` clears `#expenses-tbody` (`innerHTML = ""`) and rebuilds it row by row using `document.createElement` and `textContent` — deliberately not `innerHTML` with string concatenation, since an expense name is user-typed text and `textContent` can't be tricked into injecting HTML.
+- `renderCategoryCards()` finds each card's `.stat-amount` and `.stat-meta` elements and overwrites their `textContent` with freshly calculated numbers, and toggles the `.is-over-budget` class based on the conditional above.
+- `renderBudgetStatus()` writes the decided message into `#budget-status` and swaps its status class.
 
-Three small functions each do one calculation, so they can be reused for both the overall budget and any individual category:
-- `getTotalExpenses(list)` uses `.reduce()` to sum every expense's `amount`.
-- `getCategoryTotal(list, category)` uses `.filter()` to keep only that category's expenses, then `.reduce()` to sum them.
-- `getRemainingBalance(budget, spent)` is a simple subtraction (`budget - spent`), used both for the whole month and for each category by passing in different numbers.
+### How user interactions are handled through events
 
-`logBudgetSummary()` calls all three, then loops over `categoryBudgets` with `Object.keys(...).forEach(...)` to print a remaining-balance line for every category, not just the total.
+- The "Add Expense" button has a `click` listener (`handleAddExpense`) that reads and validates the form, pushes a new expense object if it's valid, and calls `refreshDashboard()`.
+- The "Remove" buttons use **event delegation**: rather than attaching a listener to every button (which would need re-attaching every time the table re-renders), one `click` listener sits on `#expenses-tbody` itself. It uses `event.target.closest(".remove-btn")` to check whether the click landed on a Remove button, reads that button's `data-index` attribute, removes that one expense with `.splice(index, 1)`, and calls `refreshDashboard()`. This one listener keeps working no matter how many rows get added or removed.
 
-### How functions help organize the code
+### Processing data with loops
 
-Instead of one long script, the logic is split into single-purpose functions: three pure calculation functions (`getTotalExpenses`, `getCategoryTotal`, `getRemainingBalance`) that take inputs and return a number with no side effects, one formatting helper (`formatCurrency`) so every dollar amount in the console looks the same, one input-handling function (`promptForMonthlyBudget`) that isolates all the validation logic in one place, and one "run everything" function (`logBudgetSummary`) that ties the others together and handles all the console output. Each function can be tested or reused on its own — for example, `getCategoryTotal()` works for any category without needing to be rewritten.
+- `renderExpensesTable()` uses a classic `for (let i = 0; i < expenseList.length; i++)` loop, specifically because each row's Remove button needs to know its own index in the array — a plain indexed loop makes that index available directly.
+- `renderCategoryCards()` uses `.forEach()` over the `NodeList` of `.stat-card` elements returned by `querySelectorAll`.
+- `logBudgetSummary()` (kept from Week 5, still printing to the console alongside the on-page updates) uses a `for...of` loop over `Object.keys(categoryBudgets)`.
 
-### Displaying results
+Three different loop styles are used deliberately, matching whichever fits the task best, rather than defaulting to one everywhere.
 
-Every calculated value is printed with a clear label (`Monthly budget:`, `Total spent:`, `Remaining balance:`, etc.), grouped into an overall summary block followed by a per-category breakdown block, with header/divider lines so the output is easy to scan in the console rather than one wall of numbers.
+### Connecting it all together
 
-### Connecting the Add Expense form
+The flow for any user action is the same: **event → validate/update the `expenses` array → `refreshDashboard()` → all four outputs (table, cards, banner, console) redraw from the same data.** Nothing is updated in two places by hand, which is what keeps the table, the cards, the banner, and the console from ever disagreeing with each other.
 
-The "Add Expense" button now has a real `click` event listener (`addExpenseButton.addEventListener("click", handleAddExpense)`). When clicked:
+### Challenges encountered
 
-1. `readExpenseFromForm()` reads the four inputs by their `id` (`expense-name`, `expense-amount`, `expense-category`, `expense-date`), trims/parses them, and validates each one — an empty name, a non-positive amount, a blank category, or a missing date all stop the process with an `alert()` telling the user what to fix, and move focus back to that field. It returns `null` if anything's invalid, or a plain expense object (`{ name, amount, category, date }`) if everything checks out.
-2. `handleAddExpense()` calls that function, and if it got a real object back, pushes it into the existing `expenses` array with `.push()` — no new array is created, so every other function (`getTotalExpenses`, `getCategoryTotal`, etc.) automatically sees the new entry next time it runs.
-3. It calls `logBudgetSummary()` again immediately, so the console prints an updated summary reflecting the new expense.
-4. Finally, `expenseForm.reset()` clears the form so it's ready for the next entry.
-
-The table on the page itself isn't re-rendered yet — the expense is fully tracked in the `expenses` array and every calculation reflects it, but drawing new rows into the visible `<table>` is DOM-rendering work for a later week.
+- **Keeping "Remove" working after every re-render.** An early version attached a `click` listener to each Remove button individually — but since `renderExpensesTable()` clears and rebuilds the table on every change, those listeners would have needed re-attaching every single time, and it's easy to forget one. Switching to a single delegated listener on `#expenses-tbody` (using `.closest(".remove-btn")` to check what was actually clicked) solved this once, permanently — new rows automatically work without any extra listener code.
+- **A dropdown option that didn't exist.** The category cards have always shown Utilities and Savings, but the Add Expense dropdown only offered Food, Transport, Rent, Entertainment, and Other — so there was no way to ever add an expense that would actually update the Utilities card. Added a "Utilities" option to the dropdown so every spending category shown on the dashboard can actually be updated by the user (Savings is intentionally left out, since it's a savings goal rather than something the expense form is meant to log).
+- **Avoiding `innerHTML` for user-typed text.** Building each table row with `innerHTML` and string concatenation would have been shorter to write, but it means anything a user types into the expense name field gets parsed as HTML. Building rows with `document.createElement()` and setting `.textContent` avoids that risk entirely, at the cost of a few more lines per row.
 
 ## CSS selectors used (Weeks 1-2)
 
@@ -106,7 +101,7 @@ The table on the page itself isn't re-rendered yet — the expense is fully trac
 
 ## Design notes
 
-Colors and fonts are defined once as CSS custom properties in `:root` rather than hardcoded throughout the stylesheet, so the whole palette can be adjusted from one place. Headings use Fraunces (serif); body text uses Poppins, both loaded from Google Fonts. Category icons use Font Awesome.
+Colors and fonts are defined once as CSS custom properties in `:root` rather than hardcoded throughout the stylesheet, so the whole palette can be adjusted from one place. Headings use Fraunces (serif); body text uses Poppins, both loaded from Google Fonts. Category icons use Font Awesome. Week 6 added a `--danger` / `--danger-tint` pair (in both the light and dark themes) purely for the over-budget states, keeping the same "everything routes through a variable" rule as the rest of the palette.
 
 ### Week 3: visual design pass
 
@@ -139,6 +134,7 @@ All color is driven from named variables in `:root`:
 | `--shadow-color` | Card shadow color |
 | `--row-alt` | Alternating table row background |
 | `--on-brand` | Text/icon color placed on top of brand-colored elements |
+| `--danger` / `--danger-tint` | Over-budget warning color (added Week 6) |
 
 **Responsive layout**
 A single `@media (max-width: 768px)` query collapses `.dashboard` to one column, turns the sidebar into a horizontal scrollable nav bar, and drops the six stat cards to a single column.
@@ -151,4 +147,4 @@ A `@media (prefers-color-scheme: dark)` block overrides *only* the `:root` custo
 
 ## What's next
 
-Future weeks will connect `script.js` to the actual page — reading the Add Expense form's inputs, pushing new entries into the `expenses` array, re-rendering the table and category cards, and persisting data between visits.
+Future weeks will add persistence (so expenses survive a page refresh), editing existing expenses in place, and a way to change the monthly/category budgets from the UI instead of only via the initial `prompt()`.
